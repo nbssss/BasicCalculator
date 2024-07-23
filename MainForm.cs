@@ -1,12 +1,21 @@
+using System.CodeDom.Compiler;
+using System.Collections;
+
 namespace calc
 {
     public partial class MainForm : Form
     {
-        private double firstTemp = 0;
+        private double temp = 0;
+        private double t = 0;
+
         private double secondTemp = 0;
         private double result = 0;
         private string currentOperator;
         private bool isOperatorClicked = false;
+
+        Queue<double> tempQueue = new Queue<double>();
+        Queue<string> operatorQueue = new Queue<string>();
+        
         public MainForm()
         {
             InitializeComponent();
@@ -17,6 +26,7 @@ namespace calc
             Button btn = (Button)sender;
             textBox_input.Text += btn.Text;
             isOperatorClicked = false;
+            temp = Convert.ToDouble(textBox_input.Text);
         }
 
         private void button_operation_Click(object sender, EventArgs e)
@@ -25,54 +35,70 @@ namespace calc
 
             if (isOperatorClicked == false)
             {
+                tempQueue.Enqueue(temp);
                 isOperatorClicked = true;
-                firstTemp = Convert.ToDouble(textBox_input.Text);
                 currentOperator = btn.Text;
+                operatorQueue.Enqueue(currentOperator);
                 textBox_input.Clear();
             }
         }
 
         private void button_equal_Click(object sender, EventArgs e)
         {
-            secondTemp = Convert.ToDouble(textBox_input.Text);
-            isOperatorClicked = false;
-
-            switch(currentOperator)
+            if (isOperatorClicked == false)
             {
-                case "+":
-                    {
-                        result = firstTemp + secondTemp;
-                        textBox_input.Text = Convert.ToString(result);
+                tempQueue.Enqueue(temp);
+            }
+
+            while (operatorQueue.Count > 0)
+            {
+                double temp1 = tempQueue.Dequeue();
+                double temp2;
+
+                if (tempQueue.Count > 0)
+                {
+                    temp2 = tempQueue.Dequeue();
+                }
+                else
+                {
+                    temp2 = temp1;
+                }
+
+                string currentOperator = operatorQueue.Dequeue();
+
+                switch (currentOperator)
+                {
+                    case "+":
+                        result = temp1 + temp2;
                         break;
-                    }
-                case "-":
-                    {
-                        result = firstTemp - secondTemp;
-                        textBox_input.Text = Convert.ToString(result);
+                    case "-":
+                        result = temp1 - temp2;
                         break;
-                    }
-                case "x":
-                    {
-                        result = firstTemp * secondTemp;
-                        textBox_input.Text = Convert.ToString(result);
+                    case "x":
+                        result = temp1 * temp2;
                         break;
-                    }
-                case "/":
-                    {
-                        if (secondTemp != 0)
+                    case "/":
+                        if (temp2 != 0)
                         {
-                            result = firstTemp / secondTemp;
-                            textBox_input.Text = Convert.ToString(result);
-                            break;
+                            result = temp1 / temp2;
                         }
                         else
                         {
-                            MessageBox.Show("Can not divide by zero. Insert different value.");
-                            textBox_input.Clear();
-                            break;
+                            MessageBox.Show("Cannot divide by zero.");
                         }
-                    }
+                        break;
+                }
+                tempQueue.Enqueue(result);
             }
+            textBox_input.Text = result.ToString();
+            temp = result; 
+            tempQueue.Clear();
+            operatorQueue.Clear();
+        }
+
+        private void button_clear_Click(object sender, EventArgs e)
+        {
+            textBox_input.Clear();
         }
     }
 }

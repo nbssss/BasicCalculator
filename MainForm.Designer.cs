@@ -44,6 +44,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.button_clear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox_input
@@ -52,7 +53,7 @@
             this.textBox_input.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textBox_input.Location = new System.Drawing.Point(17, 32);
             this.textBox_input.Name = "textBox_input";
-            this.textBox_input.Size = new System.Drawing.Size(476, 47);
+            this.textBox_input.Size = new System.Drawing.Size(398, 47);
             this.textBox_input.TabIndex = 47;
             // 
             // button_equal
@@ -235,12 +236,25 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button_Click);
             // 
+            // button_clear
+            // 
+            this.button_clear.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.button_clear.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button_clear.Location = new System.Drawing.Point(421, 32);
+            this.button_clear.Name = "button_clear";
+            this.button_clear.Size = new System.Drawing.Size(74, 47);
+            this.button_clear.TabIndex = 48;
+            this.button_clear.Text = "C";
+            this.button_clear.UseVisualStyleBackColor = false;
+            this.button_clear.Click += new System.EventHandler(this.button_clear_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(509, 534);
+            this.Controls.Add(this.button_clear);
             this.Controls.Add(this.textBox_input);
             this.Controls.Add(this.button_equal);
             this.Controls.Add(this.button0);
@@ -282,5 +296,6 @@
         private Button button3;
         private Button button2;
         private Button button1;
+        private Button button_clear;
     }
 }
